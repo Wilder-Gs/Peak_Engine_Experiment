@@ -44,7 +44,7 @@ public class TitleScreen implements State{
 		//firePlace.update();
 		home.update();
 		bgCam.update(home);
-		if(Inputs.getKey(Keybind.JUMP).isPressed()) {
+		if(Inputs.getKey(Keybind.ENTER).isPressed()) {
 			if(Timer.TASPlayback) { new Save().resetSave(); }
 			MusicManager.menuSelect.play();
 			StateManager.setCurrentState(new MainMenu(home, lastRoom, bgCam));
@@ -69,10 +69,10 @@ public class TitleScreen implements State{
 		g.drawString("THE QUEST UP PENGUIN PEAK", Game.WIDTH/2-99, 50);
 		g.setColor(new Color(6,50,52));
 		g.setFont(Assets.font);
-		g.drawString("--PRESS "+Inputs.getKey(Keybind.JUMP).getKey().toUpperCase()+" TO START--", Game.WIDTH/2-59, 141);
-		g.drawString("--PRESS "+Inputs.getKey(Keybind.JUMP).getKey().toUpperCase()+" TO START--", Game.WIDTH/2-60, 141);
+		g.drawString("<--PRESS "+Inputs.getKey(Keybind.ENTER).getKey().toUpperCase()+" TO START-->", Game.WIDTH/2-77, 141);
+		g.drawString("<--PRESS "+Inputs.getKey(Keybind.ENTER).getKey().toUpperCase()+" TO START-->", Game.WIDTH/2-78, 141);
 		g.setColor(Color.white);
-		g.drawString("--PRESS "+Inputs.getKey(Keybind.JUMP).getKey().toUpperCase()+" TO START--", Game.WIDTH/2-60, 140);
+		g.drawString("<--PRESS "+Inputs.getKey(Keybind.ENTER).getKey().toUpperCase()+" TO START-->", Game.WIDTH/2-78, 140);
 
 	}
 

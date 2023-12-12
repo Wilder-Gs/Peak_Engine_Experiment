@@ -213,7 +213,7 @@ public class MapState implements State{
 	@Override
 	public void update() { 
 		mapImg = buildMap(gameState.getMap());
-		if(Inputs.getKey(Keybind.JUMP).isHeld()&&scale<1-scale/20) {
+		if(Inputs.getKey(Keybind.Z).isHeld()&&scale<1-scale/20) {
 			scale+=scale/20;
 		
 		}
@@ -225,21 +225,21 @@ public class MapState implements State{
 			}
 		}		
 		
-		if(Inputs.getKey(Keybind.LEFT).isHeld()&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.LEFT).isHeld() || Inputs.getKey(Keybind.A).isHeld())&&scale>MINSCALE) {
 			mapX+=4;
 		}
-		if(Inputs.getKey(Keybind.RIGHT).isHeld()&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.RIGHT).isHeld() || Inputs.getKey(Keybind.D).isHeld())&&scale>MINSCALE) {
 			mapX-=4;
 		}
 		
-		if(Inputs.getKey(Keybind.UP).isHeld()&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.UP).isHeld() || Inputs.getKey(Keybind.W).isHeld())&&scale>MINSCALE) {
 			mapY+=4;
 		}
-		if(Inputs.getKey(Keybind.DOWN).isHeld()&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.DOWN).isHeld() || Inputs.getKey(Keybind.S).isHeld())&&scale>MINSCALE) {
 			mapY-=4;
 		}
 	
-		if(Inputs.getKey(Keybind.LEFT).isPressed()) {
+		if(Inputs.getKey(Keybind.LEFT).isPressed() || Inputs.getKey(Keybind.A).isPressed()) {
 			if(scale<=MINSCALE) {
 				MusicManager.menuBack.play();
 				StateManager.setCurrentState(new PauseState(gameState));
@@ -277,7 +277,7 @@ public class MapState implements State{
 			g.drawString("Map", Game.WIDTH/2-11, 24);
 			
 			g.setFont(Assets.font);
-			g.drawString(Inputs.getKey(Keybind.JUMP).getKey()+"/"+Inputs.getKey(Keybind.GRAPPLE).getKey()+" TO ZOOM", Game.WIDTH/2-34, 166);
+			g.drawString(Inputs.getKey(Keybind.Z).getKey()+"/"+Inputs.getKey(Keybind.GRAPPLE).getKey()+" TO ZOOM", Game.WIDTH/2-34, 166);
 		
 		
 		

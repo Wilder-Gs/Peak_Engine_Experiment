@@ -21,7 +21,7 @@ public class Credits implements State{
 			+ "\n title font: Setback TT BRK by aenigma Fonts \n "
 			+ "sounds: alexo400, voxlab, cylon8472, dland, mallement, soundscalpel.com, and j_p_higgins from freesound.org \n "
 			
-			+ "\n ---- "+Inputs.getKey(Keybind.JUMP).getKey()+" to continue ----";
+			+ "\n ---- "+Inputs.getKey(Keybind.ENTER).getKey()+" to continue ----";
 	public Credits(GameState gameState) {
 		this.gameState = gameState;
 		
@@ -36,7 +36,7 @@ public class Credits implements State{
 	@Override
 	public void update() {
 		
-		if(Inputs.getKey(Keybind.PAUSE).isPressed()||Inputs.getKey(Keybind.JUMP).isPressed()) {
+		if(Inputs.getKey(Keybind.PAUSE).isPressed()||Inputs.getKey(Keybind.ENTER).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(gameState);
 		}
