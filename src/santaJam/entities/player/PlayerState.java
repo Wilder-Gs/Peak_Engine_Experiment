@@ -1,7 +1,6 @@
 package santaJam.entities.player;
 
-import com.studiohartman.jamepad.ControllerAxis;
-import com.studiohartman.jamepad.ControllerIndex;
+import com.studiohartman.jamepad.ControllerButton;
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
 
@@ -116,10 +115,11 @@ public abstract class PlayerState {
 		}
 	}
 	protected void doFriction(Player player) {
-		if(player.getVelX()>FRICTION*(1-currController.leftStickX)) {
-			player.addVelX(-FRICTION*(1-currController.leftStickX));
-		}else if(player.getVelX()<-FRICTION*(1+currController.leftStickX)){
-			player.addVelX(FRICTION*(1-currController.leftStickX));
+		double friction = FRICTION*Math.abs(player.getVelX()/TOPWALKSPEED);
+		if(player.getVelX()>friction) {
+			player.addVelX(-friction);
+		}else if(player.getVelX()<-friction){
+			player.addVelX(friction);
 		}else {
 			player.setVelX(0);
 		}

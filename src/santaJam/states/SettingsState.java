@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.SantaJam;
@@ -22,6 +25,9 @@ public class SettingsState implements State{
 	GameState mainState;
 	State stateToSwitch = null;
 	Menu menu;
+
+	private ControllerManager controllers;
+	private ControllerState currController;
 	
 	public SettingsState(GameState mainState) {
 		this.mainState = mainState;
@@ -29,6 +35,8 @@ public class SettingsState implements State{
 	}
 	@Override
 	public void start(State prevState) {
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 		Color textColour = new Color(200,254,255),hoverColour = new Color(5,28,40) ;
 
 		menu = new Menu(new Rectangle(), new MenuObject[] {
@@ -122,13 +130,15 @@ public class SettingsState implements State{
 	@Override
 	public void update() {
 		menu.update();
+		controllers.update();
+		currController = controllers.getState(0);
 		if(stateToSwitch!=null) {
 			StateManager.setCurrentState(stateToSwitch);
 		}
-		if(Inputs.getKey(Keybind.RIGHT).isPressed()) {
+		if(Inputs.getKey(Keybind.RIGHT).isPressed()|| currController.dpadRightJustPressed) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new PauseState(mainState));
-		}if(Inputs.getKey(Keybind.PAUSE).isPressed()) {
+		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| currController.startJustPressed) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(mainState);
 			

@@ -5,6 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.audio.MusicManager;
@@ -29,9 +32,15 @@ public class PauseState implements State{
 	MenuText slide, grapple, doubleJump, boost, binoculars, milk, chocolate, marshmellow;
 	TextElement itemText;
 	int itemTextWidth=108;
+
+	private ControllerManager controllers;
+	private ControllerState currController;
 	
 	public PauseState(GameState gameState) {
 		this.gameState = gameState;
+
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 		
 		int milkNum = 0, chocolateNum=0, marshmellowNum=0;
 		for(Room r:gameState.getMap().getAllRooms()) {
@@ -87,13 +96,16 @@ public class PauseState implements State{
 	@Override
 	public void update() {
 		menu.update();
-		if(Inputs.getKey(Keybind.PAUSE).isPressed()) {
+		controllers.update();
+		currController = controllers.getState(0);
+
+		if(Inputs.getKey(Keybind.PAUSE).isPressed() || currController.startJustPressed) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(gameState);
-		}if(Inputs.getKey(Keybind.RIGHT).isPressed()) {
+		}if(Inputs.getKey(Keybind.RIGHT).isPressed()|| currController.dpadRightJustPressed) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new MapState(gameState));
-		}if(Inputs.getKey(Keybind.LEFT).isPressed()) {
+		}if(Inputs.getKey(Keybind.LEFT).isPressed()|| currController.dpadLeftJustPressed) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new SettingsState(gameState));
 		}

@@ -3,6 +3,9 @@ package santaJam.states;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.audio.MusicManager;
@@ -21,6 +24,9 @@ public class TitleScreen implements State{
 	Room home,lastRoom;
 	Camera bgCam;
 	Entity radio, firePlace = new FirePlace(568,216);
+
+	private ControllerManager controllers;
+	private ControllerState currController;
 	
 	public TitleScreen(Room home, Room lastRoom, Camera bgCam) {
 		radio = new Radio(488,264);
@@ -37,6 +43,8 @@ public class TitleScreen implements State{
 	public void start(State prevState) {
 		bgCam.setEntityWeight(0);
 		bgCam.setLocationWeight(1);
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 	}
 
 	@Override
@@ -44,7 +52,9 @@ public class TitleScreen implements State{
 		//firePlace.update();
 		home.update();
 		bgCam.update(home);
-		if(Inputs.getKey(Keybind.ENTER).isPressed()) {
+		controllers.update();
+		currController = controllers.getState(0);
+		if(Inputs.getKey(Keybind.ENTER).isPressed()|| currController.aJustPressed) {
 			if(Timer.TASPlayback) { new Save().resetSave(); }
 			MusicManager.menuSelect.play();
 			StateManager.setCurrentState(new MainMenu(home, lastRoom, bgCam));

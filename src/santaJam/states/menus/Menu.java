@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.audio.MusicManager;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
@@ -17,18 +20,26 @@ public class Menu extends MenuSelection{
 	private int selection=-1;
 	private int hovered=0;
 	private boolean inSubMenu=false;
+
+	private ControllerManager controllers;
+	private ControllerState currController;
 	
 	public Menu(Rectangle bounds,String name,Color colour, Color hoverColour,  MenuObject[] menuObjects) {
 		super(bounds,name,colour,hoverColour);
 		this.menuObjects=menuObjects;
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 	}
 	public Menu(Rectangle bounds,  MenuObject[] menuObjects) {
 		this(bounds, "",Color.black,Color.white, menuObjects);
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 	}
 
 
 	public void update() {
-		
+		controllers.update();
+		currController = controllers.getState(0);
 		if(inSubMenu) {
 			((Menu) menuObjects[selection]).update();
 			if(!menuObjects[selection].selected) {
@@ -38,7 +49,7 @@ public class Menu extends MenuSelection{
 		}
 		
 		
-		if(Inputs.getKey(Keybind.DOWN).isPressed()) {
+		if(Inputs.getKey(Keybind.DOWN).isPressed() || currController.dpadDownJustPressed) {
 			MusicManager.menuMove.play();
 			
 			hovered++;
@@ -46,7 +57,7 @@ public class Menu extends MenuSelection{
 				hovered=0;
 			}
 		}
-		if(Inputs.getKey(Keybind.UP).isPressed()) {
+		if(Inputs.getKey(Keybind.UP).isPressed()|| currController.dpadUpJustPressed) {
 			MusicManager.menuMove.play();
 			hovered--;
 			if(hovered<0) {
@@ -57,7 +68,7 @@ public class Menu extends MenuSelection{
 		
 		
 		
-		if(Inputs.getKey(Keybind.ENTER).isPressed()) {
+		if(Inputs.getKey(Keybind.ENTER).isPressed() || currController.aJustPressed) {
 			if(!(menuObjects[hovered] instanceof MenuText)) {
 				MusicManager.menuSelect.play();
 			}

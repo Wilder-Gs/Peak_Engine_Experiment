@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.SantaJam;
@@ -22,6 +25,8 @@ public class RebindControls implements State {
 
 	private int[] keyCodes = new int[Keybind.values().length];
 	private int currentAction = 0;
+	private ControllerManager controllers;
+	private ControllerState currController;
 
 	public RebindControls(State returnState) {
 		this.returnState = returnState;
@@ -29,13 +34,18 @@ public class RebindControls implements State {
 
 	@Override
 	public void start(State prevState) {
-
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 	}
 
 	@Override
 	public void update() {
 		Keybind current = Keybind.values()[currentAction];
 		int index = current.index;
+
+		controllers.update();
+		currController = controllers.getState(0);
+
 		if (current.bindable) {
 			action.update(
 					"  PRESS BUTTON FOR " + current.name.toUpperCase() + " \n ESCAPE TO CANCEL, ENTER FOR DEFAULT");
@@ -50,7 +60,7 @@ public class RebindControls implements State {
 					rebind.centre(Game.WIDTH - 80);
 				}
 
-				if (Inputs.getKey(Keybind.PAUSE).isPressed()) {
+				if (Inputs.getKey(Keybind.PAUSE).isPressed()|| currController.startJustPressed) {
 					StateManager.setCurrentState(returnState);
 				}
 

@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.Game;
 import santaJam.SantaJam;
 import santaJam.audio.MusicManager;
@@ -33,6 +36,8 @@ public class GameState implements State {
 	private Save save;
 	private ArrayList<Integer> openedRooms = new ArrayList<>();
 	private boolean stalled=false;
+	private ControllerManager controllers;
+	private ControllerState currContorller;
 
 	private TasPlayback tas;
 	
@@ -56,6 +61,8 @@ public class GameState implements State {
 			tas.initPlayback();
 		}
 		timerText.setOpacity(150);
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 	}
 	
 	@Override
@@ -87,6 +94,8 @@ public class GameState implements State {
 	@Override
 	public void update() {
 		Timer.update();
+		controllers.update();
+		currContorller = controllers.getState(0);
 
 		if(SantaJam.getGame().getSettings().getSpeedrunEnabled()) {
 			updateInputDisplay();
@@ -145,7 +154,7 @@ public class GameState implements State {
 		UIElement.getUIManager().update();
 		Particle.getParticleManager().update();
 		
-		if(Inputs.getKey(Keybind.PAUSE).isPressed()) {
+		if(Inputs.getKey(Keybind.PAUSE).isPressed() || currContorller.startJustPressed) {
 			System.out.println(Timer.getTimeString());
 			MusicManager.menuSelect.play();
 			StateManager.setCurrentState(new PauseState(this));

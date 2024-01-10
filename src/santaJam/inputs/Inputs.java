@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.studiohartman.jamepad.ControllerButton;
+
 import santaJam.SantaJam;
 
 public class Inputs implements KeyListener{

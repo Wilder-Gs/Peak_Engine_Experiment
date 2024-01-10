@@ -5,6 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.audio.MusicManager;
@@ -18,6 +21,8 @@ import santaJam.maps.Room;
 public class MapState implements State{
 	private final int LEFT=0, RIGHT=1, UP=2, DOWN=3;
 	private final double MINSCALE=0.25;
+	private ControllerManager controllers;
+	private ControllerState currController;
 	
 	GameState gameState;
 	BufferedImage mapImg;
@@ -34,7 +39,8 @@ public class MapState implements State{
 		mapImg = buildMap(gameState.getMap());
 		center();
 		
-		
+		controllers = new ControllerManager();
+		controllers.initSDLGamepad();
 	}
 	
 	@Override 
@@ -213,6 +219,10 @@ public class MapState implements State{
 	@Override
 	public void update() { 
 		mapImg = buildMap(gameState.getMap());
+		controllers.update();
+		currController = controllers.getState(0);
+
+
 		if(Inputs.getKey(Keybind.Z).isHeld()&&scale<1-scale/20) {
 			scale+=scale/20;
 		
@@ -223,30 +233,32 @@ public class MapState implements State{
 			}else {
 				center();
 			}
-		}		
+		}	
 		
-		if((Inputs.getKey(Keybind.LEFT).isHeld())&&scale>MINSCALE) {
+		//Trigger zooms
+		
+		if((Inputs.getKey(Keybind.LEFT).isHeld()|| currController.dpadLeft)&&scale>MINSCALE) {
 			mapX+=4;
 		}
-		if((Inputs.getKey(Keybind.RIGHT).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.RIGHT).isHeld()|| currController.dpadRight)&&scale>MINSCALE) {
 			mapX-=4;
 		}
 		
-		if((Inputs.getKey(Keybind.UP).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.UP).isHeld()|| currController.dpadUp)&&scale>MINSCALE) {
 			mapY+=4;
 		}
-		if((Inputs.getKey(Keybind.DOWN).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.DOWN).isHeld()|| currController.dpadDown)&&scale>MINSCALE) {
 			mapY-=4;
 		}
 	
-		if(Inputs.getKey(Keybind.LEFT).isPressed()) {
+		if(Inputs.getKey(Keybind.LEFT).isPressed()|| currController.dpadLeftJustPressed) {
 			if(scale<=MINSCALE) {
 				MusicManager.menuBack.play();
 				StateManager.setCurrentState(new PauseState(gameState));
 			}else {
 				
 			}
-		}if(Inputs.getKey(Keybind.PAUSE).isPressed()) {
+		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| currController.startJustPressed) {
 			MusicManager.menuBack.play();
 			StateManager.setCurrentState(gameState);
 		}
