@@ -90,10 +90,10 @@ public class PauseState implements State{
 		if(Inputs.getKey(Keybind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(gameState);
-		}if(Inputs.getKey(Keybind.RIGHT).isPressed()  || Inputs.getKey(Keybind.D).isHeld()) {
+		}if(Inputs.getKey(Keybind.RIGHT).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new MapState(gameState));
-		}if(Inputs.getKey(Keybind.LEFT).isPressed() || Inputs.getKey(Keybind.A).isPressed()) {
+		}if(Inputs.getKey(Keybind.LEFT).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new SettingsState(gameState));
 		}

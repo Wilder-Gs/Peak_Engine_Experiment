@@ -38,7 +38,7 @@ public class Menu extends MenuSelection{
 		}
 		
 		
-		if(Inputs.getKey(Keybind.DOWN).isPressed() || Inputs.getKey(Keybind.S).isPressed()) {
+		if(Inputs.getKey(Keybind.DOWN).isPressed()) {
 			MusicManager.menuMove.play();
 			
 			hovered++;
@@ -46,7 +46,7 @@ public class Menu extends MenuSelection{
 				hovered=0;
 			}
 		}
-		if(Inputs.getKey(Keybind.UP).isPressed()|| Inputs.getKey(Keybind.W).isPressed()) {
+		if(Inputs.getKey(Keybind.UP).isPressed()) {
 			MusicManager.menuMove.play();
 			hovered--;
 			if(hovered<0) {

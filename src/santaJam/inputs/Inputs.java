@@ -2,12 +2,15 @@ package santaJam.inputs;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import santaJam.SantaJam;
 
 public class Inputs implements KeyListener{
 	
-	private static int[] keyCodes = new int[Keybind.values().length];
+	private static ArrayList<List<Integer>> keyCodes = new ArrayList<List<Integer>>(Keybind.values().length);
 	private static boolean[] keyStates = new boolean[Keybind.values().length];
 	private static InputButton[] inputButtons = new InputButton[Keybind.values().length];
 
@@ -22,7 +25,7 @@ public class Inputs implements KeyListener{
 		keyPressed=true;
 		lastKeyCode=e.getKeyCode();
 		for (Keybind keybind : Keybind.values()) {
-			if(e.getKeyCode() == keyCodes[keybind.index]) {
+			if(keyCodes.get(keybind.index).contains(e.getKeyCode())) {
 				keyStates[keybind.index] = true;
 			}
 		}
@@ -32,7 +35,7 @@ public class Inputs implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		keyPressed=false;
 		for (Keybind keybind : Keybind.values()) {
-			if(e.getKeyCode() == keyCodes[keybind.index]) {
+			if(keyCodes.get(keybind.index).contains(e.getKeyCode())) {
 				keyStates[keybind.index] = false;
 			}
 		}
@@ -51,10 +54,10 @@ public class Inputs implements KeyListener{
 	public static void setKeyBinds(int[] newKeyCodes) {
 		for (Keybind keybind : Keybind.values()) {
 			try {
-				keyCodes[keybind.index] = newKeyCodes[keybind.index];
+				keyCodes.get(keybind.index).set(0,newKeyCodes[keybind.index]);
 				inputButtons[keybind.index] = new InputButton(newKeyCodes[keybind.index]);
 			} catch(Exception e) {
-				keyCodes[keybind.index] = keybind.default_bind;
+				keyCodes.add(Arrays.asList(keybind.default_bind, keybind.alternate_bind));
 				inputButtons[keybind.index] = new InputButton(keybind.default_bind);
 			}
 		}

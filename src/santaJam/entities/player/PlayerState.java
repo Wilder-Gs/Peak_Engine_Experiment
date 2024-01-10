@@ -1,5 +1,10 @@
 package santaJam.entities.player;
 
+import com.studiohartman.jamepad.ControllerAxis;
+import com.studiohartman.jamepad.ControllerIndex;
+import com.studiohartman.jamepad.ControllerManager;
+import com.studiohartman.jamepad.ControllerState;
+
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 
@@ -9,11 +14,22 @@ public abstract class PlayerState {
 	
 	protected final static double FRICTION=0.5, TOPWALKSPEED=2.75, WALKACCELERATION=0.75;
 	protected final static int BUFFERLENGTH = 10, COYOTETIME = 5;
+	private boolean first = true;
 	
 	protected int width=4, height=13, slideWidth=12,slideHeight=6;
+
+	private static ControllerManager controllers;
+	private static ControllerState currController;
 	
 	public abstract void start(PlayerState prevState);
 	public PlayerState update(Player player) {
+		if(first){
+			controllers = new ControllerManager();
+			controllers.initSDLGamepad();
+			first = false;
+		}
+		controllers.update();
+		currController = controllers.getState(0);
 		player.changeBounds(width, height);
 		return null;
 	}
@@ -21,15 +37,29 @@ public abstract class PlayerState {
 	
 	protected void normalMoveLeftRight(Player player) {
 		doFriction(player);
-		if((Inputs.getKey(Keybind.LEFT).isHeld() || Inputs.getKey(Keybind.A).isHeld())&&player.getVelX()>-TOPWALKSPEED) {
+		if((Inputs.getKey(Keybind.LEFT).isHeld() || currController.dpadLeft)&&player.getVelX()>-TOPWALKSPEED) {
 			player.addVelX(-WALKACCELERATION);
 			player.setDirection(true);
 			if(player.getVelX()<-TOPWALKSPEED) {
 				player.setVelX(-TOPWALKSPEED);
 			}
 			
-		}if((Inputs.getKey(Keybind.RIGHT).isHeld() || Inputs.getKey(Keybind.D).isHeld())&&player.getVelX()<TOPWALKSPEED) {
+		}if((Inputs.getKey(Keybind.RIGHT).isHeld() || currController.dpadRight)&&player.getVelX()<TOPWALKSPEED) {
 			player.addVelX(WALKACCELERATION);
+			player.setDirection(false);
+			if(player.getVelX()>TOPWALKSPEED) {
+				player.setVelX(TOPWALKSPEED);
+			}
+		}
+		//Controller input is sticks
+		if(currController.leftStickX<-0.1 && player.getVelX()>TOPWALKSPEED*currController.leftStickX){
+			player.addVelX(WALKACCELERATION*currController.leftStickX);
+			player.setDirection(true);
+			if(player.getVelX()<-TOPWALKSPEED) {
+				player.setVelX(-TOPWALKSPEED);
+			}
+		}if(currController.leftStickX>0.1 && player.getVelX()<TOPWALKSPEED*currController.leftStickX){
+			player.addVelX(WALKACCELERATION*currController.leftStickX);
 			player.setDirection(false);
 			if(player.getVelX()>TOPWALKSPEED) {
 				player.setVelX(TOPWALKSPEED);
@@ -38,21 +68,34 @@ public abstract class PlayerState {
 	}
 	protected void slowMoveLeftRight(Player player) {
 		doFriction(player);
-		if((Inputs.getKey(Keybind.LEFT).isHeld() || Inputs.getKey(Keybind.A).isHeld())&&player.getVelX()>-TOPWALKSPEED/2) {
+		if((Inputs.getKey(Keybind.LEFT).isHeld() || currController.dpadLeft)&&player.getVelX()>-TOPWALKSPEED/2) {
 			player.addVelX(-WALKACCELERATION);
 			player.setDirection(true);
 			if(player.getVelX()<-TOPWALKSPEED/2) {
 				player.setVelX(-TOPWALKSPEED/2);
 			}
 			
-		}if((Inputs.getKey(Keybind.RIGHT).isHeld() || Inputs.getKey(Keybind.D).isHeld())&&player.getVelX()<TOPWALKSPEED/2) {
+		}if((Inputs.getKey(Keybind.RIGHT).isHeld() || currController.dpadRight)&&player.getVelX()<TOPWALKSPEED/2) {
 			player.addVelX(WALKACCELERATION);
 			player.setDirection(false);
 			if(player.getVelX()>TOPWALKSPEED/2) {
 				player.setVelX(TOPWALKSPEED/2);
 			}
 		}
-		
+		//Controller input is sticks
+		if(currController.leftStickX<-0.1 && player.getVelX()>(TOPWALKSPEED*currController.leftStickX)/2){
+			player.addVelX(WALKACCELERATION*currController.leftStickX);
+			player.setDirection(true);
+			if(player.getVelX()<-TOPWALKSPEED/2) {
+				player.setVelX(-TOPWALKSPEED/2);
+			}
+		}if(currController.leftStickX>0.1 && player.getVelX()<(TOPWALKSPEED*currController.leftStickX)/2){
+			player.addVelX(WALKACCELERATION*currController.leftStickX);
+			player.setDirection(false);
+			if(player.getVelX()>TOPWALKSPEED/2) {
+				player.setVelX(TOPWALKSPEED/2);
+			}
+		}
 	}
 	
 	protected void normalGravity(Player player) {
@@ -73,10 +116,10 @@ public abstract class PlayerState {
 		}
 	}
 	protected void doFriction(Player player) {
-		if(player.getVelX()>FRICTION) {
-			player.addVelX(-FRICTION);
-		}else if(player.getVelX()<-FRICTION){
-			player.addVelX(FRICTION);
+		if(player.getVelX()>FRICTION*(1-currController.leftStickX)) {
+			player.addVelX(-FRICTION*(1-currController.leftStickX));
+		}else if(player.getVelX()<-FRICTION*(1+currController.leftStickX)){
+			player.addVelX(FRICTION*(1-currController.leftStickX));
 		}else {
 			player.setVelX(0);
 		}

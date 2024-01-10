@@ -4,12 +4,16 @@ import java.awt.event.KeyEvent;
 
 public class InputButton {
 	boolean held=false, pressed=false, released=false, inputUsed=false;
-	int holdLength=0, keyCode;
+	int holdLength=0, keyCode, altCode;
 	
 	public InputButton(int keyCode) {
 		this.keyCode = keyCode;
 	}
-	
+
+	public InputButton(int keyCode, int altCode) {
+		this.keyCode = keyCode;
+		this.altCode = altCode;
+	}
 	
 	public void update(boolean isHeld){
 		if(isHeld) {

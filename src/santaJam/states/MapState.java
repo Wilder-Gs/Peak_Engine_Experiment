@@ -225,21 +225,21 @@ public class MapState implements State{
 			}
 		}		
 		
-		if((Inputs.getKey(Keybind.LEFT).isHeld() || Inputs.getKey(Keybind.A).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.LEFT).isHeld())&&scale>MINSCALE) {
 			mapX+=4;
 		}
-		if((Inputs.getKey(Keybind.RIGHT).isHeld() || Inputs.getKey(Keybind.D).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.RIGHT).isHeld())&&scale>MINSCALE) {
 			mapX-=4;
 		}
 		
-		if((Inputs.getKey(Keybind.UP).isHeld() || Inputs.getKey(Keybind.W).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.UP).isHeld())&&scale>MINSCALE) {
 			mapY+=4;
 		}
-		if((Inputs.getKey(Keybind.DOWN).isHeld() || Inputs.getKey(Keybind.S).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.DOWN).isHeld())&&scale>MINSCALE) {
 			mapY-=4;
 		}
 	
-		if(Inputs.getKey(Keybind.LEFT).isPressed() || Inputs.getKey(Keybind.A).isPressed()) {
+		if(Inputs.getKey(Keybind.LEFT).isPressed()) {
 			if(scale<=MINSCALE) {
 				MusicManager.menuBack.play();
 				StateManager.setCurrentState(new PauseState(gameState));
