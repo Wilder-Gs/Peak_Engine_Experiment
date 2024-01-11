@@ -1,8 +1,7 @@
-# Santa-Jam
-This is the source code for The Quest Up Penguin Peak, a cute but difficult platformer about a penguin trying to get his hot chocolate.
+# Peak Engine
+A test project building java swing into a viable, code-based game engine with controller support
 
-- You can find the released versions on itch here: https://agoogaloo.itch.io/super-secret-santa
-- The game was made in 1 month by 3 people for Vanmillion Studios for the 2021 Secret Santa Game Jam
+- You can find the game this engine is based on here: https://github.com/agoogaloo/Santa-Jam
 
 # Compiling
 - You can download the compiled versions on the itch page on in releases, that are the exact same, but if you want to do it yourself I won't stop you.
