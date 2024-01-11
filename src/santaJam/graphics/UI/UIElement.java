@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 
@@ -25,7 +26,7 @@ public abstract class UIElement {
 	}
 
 	public void update() {
-		if(Inputs.getKey(Keybind.JUMP).isPressed()) {
+		if(Inputs.getKey(Keybind.JUMP).isPressed() || Inputs.getBut(Controllerbind.JUMP).isPressed()) {
 			onSelect();
 		}
 	}

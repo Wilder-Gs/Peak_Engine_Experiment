@@ -9,6 +9,7 @@ import santaJam.Assets;
 import santaJam.Game;
 import santaJam.audio.MusicManager;
 import santaJam.graphics.UI.TextElement;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 
@@ -45,7 +46,8 @@ public class Credits implements State{
 	public void update() {
 		controllers.update();
 		currController = controllers.getState(0);
-		if(Inputs.getKey(Keybind.PAUSE).isPressed()||Inputs.getKey(Keybind.ENTER).isPressed() || currController.aJustPressed) {
+		if(Inputs.getKey(Keybind.PAUSE).isPressed()||Inputs.getKey(Keybind.ENTER).isPressed()
+		|| Inputs.getBut(Controllerbind.JUMP).isPressed()|| Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(gameState);
 		}

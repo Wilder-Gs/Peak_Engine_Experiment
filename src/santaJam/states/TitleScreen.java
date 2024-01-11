@@ -14,6 +14,7 @@ import santaJam.entities.Entity;
 import santaJam.entities.FirePlace;
 import santaJam.entities.Radio;
 import santaJam.graphics.Camera;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.maps.Room;
@@ -54,7 +55,7 @@ public class TitleScreen implements State{
 		bgCam.update(home);
 		controllers.update();
 		currController = controllers.getState(0);
-		if(Inputs.getKey(Keybind.ENTER).isPressed()|| currController.aJustPressed) {
+		if(Inputs.getKey(Keybind.ENTER).isPressed()|| Inputs.getBut(Controllerbind.ENTER).isPressed()) {
 			if(Timer.TASPlayback) { new Save().resetSave(); }
 			MusicManager.menuSelect.play();
 			StateManager.setCurrentState(new MainMenu(home, lastRoom, bgCam));

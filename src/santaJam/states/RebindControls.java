@@ -11,6 +11,7 @@ import santaJam.Assets;
 import santaJam.Game;
 import santaJam.SantaJam;
 import santaJam.graphics.UI.TextElement;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 
@@ -60,11 +61,11 @@ public class RebindControls implements State {
 					rebind.centre(Game.WIDTH - 80);
 				}
 
-				if (Inputs.getKey(Keybind.PAUSE).isPressed()|| currController.startJustPressed) {
+				if (Inputs.getKey(Keybind.PAUSE).isPressed() || Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 					StateManager.setCurrentState(returnState);
 				}
 
-				if (Inputs.getKey(Keybind.ENTER).isPressed()) {
+				if (Inputs.getKey(Keybind.ENTER).isPressed() || Inputs.getBut(Controllerbind.ENTER).isPressed()) {
 					keyCodes[index] = current.default_bind;
 					currentAction++;
 				} else if (Inputs.AnyKey().isPressed()) {

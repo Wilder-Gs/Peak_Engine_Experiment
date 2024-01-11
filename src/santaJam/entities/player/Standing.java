@@ -9,6 +9,7 @@ import santaJam.graphics.particles.shapes.OvalParticle;
 import santaJam.graphics.particles.shapes.RectangleShape;
 import santaJam.graphics.particles.shapes.colourers.Timed;
 import santaJam.graphics.particles.spawners.RectangleSpawn;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 
@@ -79,6 +80,19 @@ public class Standing extends PlayerState{
 		//if they pressed/buffered an grapple, they should grapple
 		if(Inputs.getKey(Keybind.GRAPPLE).getHoldLength()<BUFFERLENGTH&&Inputs.getKey(Keybind.GRAPPLE).getHoldLength()>0&&!Inputs.getKey(Keybind.GRAPPLE).isInputUsed()) {
 			Inputs.getKey(Keybind.GRAPPLE).useInput();
+			return new Grapple(this,player);
+		}
+
+		//----------------CONTROLLER------------------
+		//if they pressed/buffered a jump, then they should jump
+		if(Inputs.getBut(Controllerbind.JUMP).getHoldLength()<BUFFERLENGTH&&Inputs.getBut(Controllerbind.JUMP).getHoldLength()>0&&!Inputs.getBut(Controllerbind.JUMP).isInputUsed()) {
+			// System.out.println("jumping");
+			Inputs.getBut(Controllerbind.JUMP).useInput();
+			return new Jumping();
+		}
+		//if they pressed/buffered an grapple, they should grapple
+		if(Inputs.getBut(Controllerbind.GRAPPLE).getHoldLength()<BUFFERLENGTH&&Inputs.getBut(Controllerbind.GRAPPLE).getHoldLength()>0&&!Inputs.getBut(Controllerbind.GRAPPLE).isInputUsed()) {
+			Inputs.getBut(Controllerbind.GRAPPLE).useInput();
 			return new Grapple(this,player);
 		}
 		

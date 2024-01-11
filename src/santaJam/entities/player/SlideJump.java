@@ -8,6 +8,7 @@ import santaJam.graphics.particles.movers.Straight;
 import santaJam.graphics.particles.shapes.OvalParticle;
 import santaJam.graphics.particles.shapes.colourers.Timed;
 import santaJam.graphics.particles.spawners.RectangleSpawn;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.states.StateManager;
@@ -57,9 +58,19 @@ public class SlideJump extends PlayerState{
 			Inputs.getKey(Keybind.GRAPPLE).useInput();
 			return new SlideGrapple(this,player);
 		}
+
+		//----------Controller----------
+		if(Inputs.getBut(Controllerbind.UP).getHoldLength()<BUFFERLENGTH&&Inputs.getBut(Controllerbind.UP).getHoldLength()>0&&!Inputs.getBut(Controllerbind.UP).isInputUsed()) {
+			Inputs.getBut(Controllerbind.UP).useInput();
+			return new UpBoost(this,player);
+		}
+		if(Inputs.getBut(Controllerbind.GRAPPLE).getHoldLength()<BUFFERLENGTH&&Inputs.getBut(Controllerbind.GRAPPLE).getHoldLength()>0&&!Inputs.getBut(Controllerbind.GRAPPLE).isInputUsed()) {
+			Inputs.getBut(Controllerbind.GRAPPLE).useInput();
+			return new SlideGrapple(this,player);
+		}
 		
 		if(player.getVelY()<=0) {
-			if(!Inputs.getKey(Keybind.JUMP).isHeld()) {
+			if(!Inputs.getKey(Keybind.JUMP).isHeld() && !Inputs.getBut(Controllerbind.JUMP).isHeld()) {
 				player.addVelY(STOPSTRENGTH);
 			}	
 		}else {

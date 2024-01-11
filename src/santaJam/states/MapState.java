@@ -13,6 +13,7 @@ import santaJam.Game;
 import santaJam.audio.MusicManager;
 import santaJam.entities.Entity;
 import santaJam.entities.player.Player;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.maps.Map;
@@ -237,28 +238,28 @@ public class MapState implements State{
 		
 		//Trigger zooms
 		
-		if((Inputs.getKey(Keybind.LEFT).isHeld()|| currController.dpadLeft)&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.LEFT).isHeld()|| Inputs.getBut(Controllerbind.LEFT).isHeld())&&scale>MINSCALE) {
 			mapX+=4;
 		}
-		if((Inputs.getKey(Keybind.RIGHT).isHeld()|| currController.dpadRight)&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.RIGHT).isHeld()|| Inputs.getBut(Controllerbind.RIGHT).isHeld())&&scale>MINSCALE) {
 			mapX-=4;
 		}
 		
-		if((Inputs.getKey(Keybind.UP).isHeld()|| currController.dpadUp)&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.UP).isHeld()|| Inputs.getBut(Controllerbind.UP).isHeld())&&scale>MINSCALE) {
 			mapY+=4;
 		}
-		if((Inputs.getKey(Keybind.DOWN).isHeld()|| currController.dpadDown)&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.DOWN).isHeld()|| Inputs.getBut(Controllerbind.DOWN).isHeld())&&scale>MINSCALE) {
 			mapY-=4;
 		}
 	
-		if(Inputs.getKey(Keybind.LEFT).isPressed()|| currController.dpadLeftJustPressed) {
+		if(Inputs.getKey(Keybind.LEFT).isPressed()|| Inputs.getBut(Controllerbind.LEFT).isPressed()) {
 			if(scale<=MINSCALE) {
 				MusicManager.menuBack.play();
 				StateManager.setCurrentState(new PauseState(gameState));
 			}else {
 				
 			}
-		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| currController.startJustPressed) {
+		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.menuBack.play();
 			StateManager.setCurrentState(gameState);
 		}

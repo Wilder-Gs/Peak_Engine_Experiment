@@ -1,5 +1,6 @@
 package santaJam.entities.player;
 
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.states.StateManager;
@@ -50,6 +51,21 @@ public class Falling extends PlayerState{
 		if(Inputs.getKey(Keybind.JUMP).getHoldLength()<BUFFERLENGTH&&Inputs.getKey(Keybind.JUMP).getHoldLength()>0&&!Inputs.getKey(Keybind.JUMP).isInputUsed()
 				&&DoubleJump.canDoubleJump()&&StateManager.getGameState().getSave().hasDoubleJump()) {
 			Inputs.getKey(Keybind.JUMP).useInput();
+			
+			return new 	DoubleJump(this);
+			
+		}
+		//--------CONTROLLER TIME------------
+		//grappling if the buffer an grapple
+		if(Inputs.getBut(Controllerbind.GRAPPLE).getHoldLength()<BUFFERLENGTH&&Inputs.getBut(Controllerbind.GRAPPLE).getHoldLength()>0&&!Inputs.getBut(Controllerbind.GRAPPLE).isInputUsed()) {
+			Inputs.getBut(Controllerbind.GRAPPLE).useInput();
+			return new Grapple(this, player);
+		}
+		
+		//trying to double jump if they push jump
+		if(Inputs.getBut(Controllerbind.JUMP).getHoldLength()<BUFFERLENGTH&&Inputs.getBut(Controllerbind.JUMP).getHoldLength()>0&&!Inputs.getBut(Controllerbind.JUMP).isInputUsed()
+				&&DoubleJump.canDoubleJump()&&StateManager.getGameState().getSave().hasDoubleJump()) {
+			Inputs.getBut(Controllerbind.JUMP).useInput();
 			
 			return new 	DoubleJump(this);
 			

@@ -14,6 +14,7 @@ import santaJam.SantaJam;
 import santaJam.audio.MusicManager;
 import santaJam.components.Timer;
 import santaJam.graphics.UI.TextElement;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.states.menus.Menu;
@@ -135,10 +136,10 @@ public class SettingsState implements State{
 		if(stateToSwitch!=null) {
 			StateManager.setCurrentState(stateToSwitch);
 		}
-		if(Inputs.getKey(Keybind.RIGHT).isPressed()|| currController.dpadRightJustPressed) {
+		if(Inputs.getKey(Keybind.RIGHT).isPressed()|| Inputs.getBut(Controllerbind.RIGHT).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new PauseState(mainState));
-		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| currController.startJustPressed) {
+		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(mainState);
 			

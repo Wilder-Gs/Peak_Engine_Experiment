@@ -18,6 +18,7 @@ import santaJam.entities.upgrades.GrappleItem;
 import santaJam.entities.upgrades.SlideItem;
 import santaJam.entities.upgrades.UpBoostItem;
 import santaJam.graphics.UI.TextElement;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.maps.Map;
@@ -99,13 +100,13 @@ public class PauseState implements State{
 		controllers.update();
 		currController = controllers.getState(0);
 
-		if(Inputs.getKey(Keybind.PAUSE).isPressed() || currController.startJustPressed) {
+		if(Inputs.getKey(Keybind.PAUSE).isPressed() || Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(gameState);
-		}if(Inputs.getKey(Keybind.RIGHT).isPressed()|| currController.dpadRightJustPressed) {
+		}if(Inputs.getKey(Keybind.RIGHT).isPressed()|| Inputs.getBut(Controllerbind.RIGHT).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new MapState(gameState));
-		}if(Inputs.getKey(Keybind.LEFT).isPressed()|| currController.dpadLeftJustPressed) {
+		}if(Inputs.getKey(Keybind.LEFT).isPressed()|| Inputs.getBut(Controllerbind.LEFT).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new SettingsState(gameState));
 		}

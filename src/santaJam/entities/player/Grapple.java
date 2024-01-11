@@ -10,6 +10,7 @@ import santaJam.graphics.particles.movers.Straight;
 import santaJam.graphics.particles.shapes.OvalParticle;
 import santaJam.graphics.particles.shapes.colourers.Timed;
 import santaJam.graphics.particles.spawners.RectangleSpawn;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.maps.Room;
@@ -201,6 +202,11 @@ public class Grapple extends PlayerState {
 		// letting you cancel the pull into a jump
 		if (Inputs.getKey(Keybind.JUMP).getHoldLength() < BUFFERLENGTH && Inputs.getKey(Keybind.JUMP).getHoldLength() > 0&&!Inputs.getKey(Keybind.JUMP).isInputUsed()) {
 			Inputs.getKey(Keybind.JUMP).useInput();
+			return new Jumping();
+		}
+
+		if (Inputs.getBut(Controllerbind.JUMP).getHoldLength() < BUFFERLENGTH && Inputs.getBut(Controllerbind.JUMP).getHoldLength() > 0&&!Inputs.getBut(Controllerbind.JUMP).isInputUsed()) {
+			Inputs.getBut(Controllerbind.JUMP).useInput();
 			return new Jumping();
 		}
 

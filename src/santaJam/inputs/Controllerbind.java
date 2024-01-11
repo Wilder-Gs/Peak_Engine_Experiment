@@ -1,0 +1,32 @@
+package santaJam.inputs;
+
+import java.awt.event.KeyEvent;
+import java.util.Arrays;
+import java.util.List;
+
+import com.studiohartman.jamepad.ControllerButton;
+
+public enum Controllerbind { 
+  UP        ("up",        0, ControllerButton.DPAD_UP),
+  DOWN      ("down",      1, ControllerButton.DPAD_DOWN),
+  LEFT      ("left",      2, ControllerButton.DPAD_LEFT),
+  RIGHT     ("right",     3, ControllerButton.DPAD_RIGHT),
+  JUMP      ("jump",      4, ControllerButton.A),
+  GRAPPLE   ("grapple",   5, ControllerButton.X),
+  SAVE_STATE("save state",6, ControllerButton.GUIDE),
+  RESET     ("reset",     7, ControllerButton.LEFTSTICK),
+  FULL_RESET("hard reset",8, ControllerButton.RIGHTSTICK),
+  ENTER     ("enter",     9, ControllerButton.X),
+  PAUSE     ("pause",     10, ControllerButton.START),
+  ;
+
+  public String name;
+  public int index;
+  public ControllerButton bind;
+
+  Controllerbind(String n, int i, ControllerButton b) {
+    this.name = n;
+    this.index = i;
+    this.bind = b;
+  }
+}

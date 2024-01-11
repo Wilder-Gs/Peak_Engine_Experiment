@@ -4,8 +4,6 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.List;
 
-import com.studiohartman.jamepad.ControllerButton;
-
 public enum Keybind {
   UP        ("up",        0, false,true, Arrays.asList(38, 87)),
   DOWN      ("down",      1, false,true, Arrays.asList(40, 83)),

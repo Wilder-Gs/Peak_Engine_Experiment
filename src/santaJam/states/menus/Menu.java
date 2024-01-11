@@ -8,6 +8,7 @@ import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
 
 import santaJam.audio.MusicManager;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 
@@ -49,7 +50,7 @@ public class Menu extends MenuSelection{
 		}
 		
 		
-		if(Inputs.getKey(Keybind.DOWN).isPressed() || currController.dpadDownJustPressed) {
+		if(Inputs.getKey(Keybind.DOWN).isPressed() || Inputs.getBut(Controllerbind.DOWN).isPressed()) {
 			MusicManager.menuMove.play();
 			
 			hovered++;
@@ -57,7 +58,7 @@ public class Menu extends MenuSelection{
 				hovered=0;
 			}
 		}
-		if(Inputs.getKey(Keybind.UP).isPressed()|| currController.dpadUpJustPressed) {
+		if(Inputs.getKey(Keybind.UP).isPressed()|| Inputs.getBut(Controllerbind.UP).isPressed()) {
 			MusicManager.menuMove.play();
 			hovered--;
 			if(hovered<0) {
@@ -68,7 +69,7 @@ public class Menu extends MenuSelection{
 		
 		
 		
-		if(Inputs.getKey(Keybind.ENTER).isPressed() || currController.aJustPressed) {
+		if(Inputs.getKey(Keybind.ENTER).isPressed() || Inputs.getBut(Controllerbind.ENTER).isPressed()) {
 			if(!(menuObjects[hovered] instanceof MenuText)) {
 				MusicManager.menuSelect.play();
 			}

@@ -19,6 +19,7 @@ import santaJam.graphics.UI.RectElement;
 import santaJam.graphics.UI.TextElement;
 import santaJam.graphics.UI.UIElement;
 import santaJam.graphics.particles.Particle;
+import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.maps.Map;
@@ -108,7 +109,7 @@ public class GameState implements State {
 			if(Timer.TASPlayback) { tas.update(); }
 			else { tas.updateRecord(); }
 		}
-		if(Inputs.getKey(Keybind.RESET).isPressed()) {
+		if(Inputs.getKey(Keybind.RESET).isPressed() || Inputs.getBut(Controllerbind.RESET).isPressed()) {
 			StateManager.setCurrentState(new GameState(new Save()));
 		}
 
@@ -154,7 +155,7 @@ public class GameState implements State {
 		UIElement.getUIManager().update();
 		Particle.getParticleManager().update();
 		
-		if(Inputs.getKey(Keybind.PAUSE).isPressed() || currContorller.startJustPressed) {
+		if(Inputs.getKey(Keybind.PAUSE).isPressed() || Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			System.out.println(Timer.getTimeString());
 			MusicManager.menuSelect.play();
 			StateManager.setCurrentState(new PauseState(this));
