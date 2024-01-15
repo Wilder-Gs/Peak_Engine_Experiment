@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
 
 import santaJam.Assets;
 import santaJam.Game;
@@ -27,8 +25,6 @@ public class SettingsState implements State{
 	State stateToSwitch = null;
 	Menu menu;
 
-	private ControllerManager controllers;
-	private ControllerState currController;
 	private static boolean moved = true;
 	
 	public SettingsState(GameState mainState) {
@@ -38,8 +34,6 @@ public class SettingsState implements State{
 	@Override
 	public void start(State prevState) {
 		moved = true;
-		controllers = new ControllerManager();
-		controllers.initSDLGamepad();
 		Color textColour = new Color(200,254,255),hoverColour = new Color(5,28,40) ;
 
 		menu = new Menu(new Rectangle(), new MenuObject[] {
@@ -131,10 +125,8 @@ public class SettingsState implements State{
 	}
 
 	@Override
-	public void update() throws InterruptedException {
+	public void update(){
 		menu.update();
-		controllers.update();
-		currController = controllers.getState(0);
 		if(stateToSwitch!=null) {
 			StateManager.setCurrentState(stateToSwitch);
 		}
@@ -169,7 +161,6 @@ public class SettingsState implements State{
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
 		
 	}
 

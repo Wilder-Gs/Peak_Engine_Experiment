@@ -1,9 +1,5 @@
 package santaJam.entities.player;
 
-import com.studiohartman.jamepad.ControllerButton;
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
-
 import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;

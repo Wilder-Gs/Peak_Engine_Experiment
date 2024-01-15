@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import santaJam.Game;
 import santaJam.entities.player.Player;
-import santaJam.entities.upgrades.Collectible;
 import santaJam.entities.wallEntities.WallEntity;
 import santaJam.graphics.Camera;
 import santaJam.states.StateManager;
@@ -75,7 +74,6 @@ public class EntityManager {
 		entities.add(e);
 	}
 	public ArrayList<Entity> getEntities() {
-		// TODO Auto-generated method stub
 		return entities;
 	}
 	

@@ -74,9 +74,6 @@ public class SlideFalling extends PlayerState{
 	}
 
 	@Override
-	public void end() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void end() {}
 
 }

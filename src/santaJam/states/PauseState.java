@@ -5,9 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
-
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.audio.MusicManager;
@@ -34,15 +31,10 @@ public class PauseState implements State{
 	TextElement itemText;
 	int itemTextWidth=108;
 
-	private ControllerManager controllers;
-	private ControllerState currController;
 	private static boolean moved = true;
 	
 	public PauseState(GameState gameState) {
 		this.gameState = gameState;
-
-		controllers = new ControllerManager();
-		controllers.initSDLGamepad();
 		
 		int milkNum = 0, chocolateNum=0, marshmellowNum=0;
 		for(Room r:gameState.getMap().getAllRooms()) {
@@ -96,10 +88,8 @@ public class PauseState implements State{
 	public void start(State prevState) {}
 
 	@Override
-	public void update() throws InterruptedException {
+	public void update() {
 		menu.update();
-		controllers.update();
-		currController = controllers.getState(0);
 
 		if(Inputs.getKey(Keybind.PAUSE).isPressed() || Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);

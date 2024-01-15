@@ -5,9 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
-
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.audio.MusicManager;
@@ -22,8 +19,6 @@ import santaJam.maps.Room;
 public class MapState implements State{
 	private final int LEFT=0, RIGHT=1, UP=2, DOWN=3;
 	private final double MINSCALE=0.25;
-	private ControllerManager controllers;
-	private ControllerState currController;
 	private static boolean moved = true;
 	
 	GameState gameState;
@@ -40,16 +35,11 @@ public class MapState implements State{
 		setMapVals(gameState.getMap());
 		mapImg = buildMap(gameState.getMap());
 		center();
-		
-		controllers = new ControllerManager();
-		controllers.initSDLGamepad();
 	}
 	
 	@Override 
-	public void start(State prevState) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void start(State prevState) {}
+
 	private void setMapVals(Map map){
 		for(int i=0;i<map.getAllRooms().size();i++) {
 			Room r = map.getAllRooms().get(i);
@@ -221,8 +211,6 @@ public class MapState implements State{
 	@Override
 	public void update() { 
 		mapImg = buildMap(gameState.getMap());
-		controllers.update();
-		currController = controllers.getState(0);
 
 
 		if((Inputs.getKey(Keybind.Z).isHeld() || Inputs.con.rightTrigger > 0.1)&&scale<1-scale/20) {
@@ -304,10 +292,7 @@ public class MapState implements State{
 	}
 
 	@Override
-	public void end() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void end() {}
 	
 }
 

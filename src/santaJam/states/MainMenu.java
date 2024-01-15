@@ -5,9 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
-
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.SantaJam;
@@ -35,16 +32,12 @@ public class MainMenu implements State{
 	Menu menu;
 	State stateToSwitch = null;
 	private Color green = new Color(6,50,52);
-	private ControllerManager controllers;
-	private ControllerState currController;
 	
 	public MainMenu(Room home, Room lastRoom, Camera bgCam) {
 		this.home=home;
 		this.lastRoom=lastRoom;
 		this.bgCam=bgCam;
 		bgCam.moveToPoint(0, 17*8);
-		controllers = new ControllerManager();
-		controllers.initSDLGamepad();
 	}
 	
 	@Override
@@ -123,13 +116,11 @@ public class MainMenu implements State{
 	} 
 
 	@Override
-	public void update() throws InterruptedException {
+	public void update() {
 		bgCam.update(lastRoom);
 		lastRoom.update();
 		particles.update();
 		Particle.getParticleManager().update();
-		controllers.update();
-		currController = controllers.getState(0);
 		
 		
 		menu.update();
@@ -173,8 +164,7 @@ public class MainMenu implements State{
 
 	@Override
 	public void end() {
-		// TODO Auto-generated method stub
-		
 	}
+
 
 }

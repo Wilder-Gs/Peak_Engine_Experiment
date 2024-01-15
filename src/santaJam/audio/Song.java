@@ -10,12 +10,10 @@ import javax.sound.sampled.LineUnavailableException;
 import santaJam.SantaJam;
 
 public class Song extends Sound{
-	private String path;
 	private Clip clip;
 	private boolean fadeOut=false,loops;
 
-	public Song(String path, boolean loops) { 
-		this.path=path;
+	public Song(String path, boolean loops) {
 		this.loops=loops;
 		try {
 			loadAudioStream(path);
@@ -27,7 +25,6 @@ public class Song extends Sound{
 			System.out.println("Audio line for playing back is unavailable.");
 			ex.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

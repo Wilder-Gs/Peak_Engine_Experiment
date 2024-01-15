@@ -18,10 +18,7 @@ public class BreakableWall extends WallEntity{
 		image=ThreadLocalRandom.current().nextInt(Assets.iceWall.length);
 	}	
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update() {}
 
 	@Override
 	public void render(Graphics2D g, Camera camera) {

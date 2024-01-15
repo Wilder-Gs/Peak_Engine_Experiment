@@ -2,9 +2,6 @@ package santaJam.states;
 
 import java.awt.Graphics2D;
 
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
-
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.audio.MusicManager;
@@ -17,8 +14,6 @@ public class Credits implements State{
 
 	GameState gameState;
 	TextElement itemText;
-	private static ControllerManager controllers;
-	private static ControllerState currController;
 	
 	String credits = "programming/level design: agoogaloo + AlexWilder \n "
 			+ "art: bab chunko + agoogaloo \n "
@@ -30,9 +25,6 @@ public class Credits implements State{
 			+ "\n ---- "+Inputs.getKey(Keybind.ENTER).getKey()+" to continue ----";
 	public Credits(GameState gameState) {
 		this.gameState = gameState;
-		controllers = new ControllerManager();
-		
-		controllers.initSDLGamepad();
 		
 		itemText = new TextElement(false, 20,40,TextElement.BIGMONOWIDTH,TextElement.SMALLMONOHEIGHT+3,Game.WIDTH-40,
 				credits, Assets.font);
@@ -44,8 +36,6 @@ public class Credits implements State{
 
 	@Override
 	public void update() {
-		controllers.update();
-		currController = controllers.getState(0);
 		if(Inputs.getKey(Keybind.PAUSE).isPressed()||Inputs.getKey(Keybind.ENTER).isPressed()
 		|| Inputs.getBut(Controllerbind.JUMP).isPressed()|| Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);

@@ -19,10 +19,7 @@ public class GrapplePoint extends Entity{
 		grappleable=true;
 	}
 	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update() {}
 
 	@Override
 	public void render(Graphics2D g, Camera camera) {

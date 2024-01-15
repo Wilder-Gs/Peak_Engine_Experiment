@@ -3,11 +3,6 @@ package santaJam.states.menus;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.util.concurrent.TimeUnit;
-
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
-
 import santaJam.audio.MusicManager;
 import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
@@ -23,26 +18,17 @@ public class Menu extends MenuSelection{
 	private int hovered=0;
 	private boolean inSubMenu=false;
 	private static boolean moved = false;
-
-	private ControllerManager controllers;
-	private ControllerState currController;
 	
 	public Menu(Rectangle bounds,String name,Color colour, Color hoverColour,  MenuObject[] menuObjects) {
 		super(bounds,name,colour,hoverColour);
 		this.menuObjects=menuObjects;
-		controllers = new ControllerManager();
-		controllers.initSDLGamepad();
 	}
 	public Menu(Rectangle bounds,  MenuObject[] menuObjects) {
 		this(bounds, "",Color.black,Color.white, menuObjects);
-		controllers = new ControllerManager();
-		controllers.initSDLGamepad();
 	}
 
 
-	public void update() throws InterruptedException {
-		controllers.update();
-		currController = controllers.getState(0);
+	public void update() {
 		if(inSubMenu) {
 			((Menu) menuObjects[selection]).update();
 			if(!menuObjects[selection].selected) {

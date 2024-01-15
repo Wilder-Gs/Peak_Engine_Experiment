@@ -11,12 +11,11 @@ import santaJam.states.StateManager;
 
 public class Collectible extends Upgrade{
 	public static final int MILK=0, MARSHMALLOW=1,CHOCOLATE=3, MAXANIMTIME=120;
-	private int type = 0, animTimer=0;
+	private int animTimer=0;
 	private Animation anim;
 
 	public Collectible(int x, int y, int type) {
 		super(x, y);
-		this.type=type;
 		grappleable=false;
 		if(type==MILK) {
 			name = "MILK";

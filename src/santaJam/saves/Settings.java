@@ -9,7 +9,6 @@ import java.util.Properties;
 import santaJam.SantaJam;
 import santaJam.components.Timer;
 import santaJam.inputs.Inputs;
-import santaJam.inputs.Keybind;
 
 public class Settings {
 	private Properties propertiesFile=new Properties();

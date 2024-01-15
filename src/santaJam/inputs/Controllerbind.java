@@ -1,9 +1,5 @@
 package santaJam.inputs;
 
-import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import java.util.List;
-
 import com.studiohartman.jamepad.ControllerButton;
 
 public enum Controllerbind { 

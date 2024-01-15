@@ -1,7 +1,5 @@
 package santaJam.inputs;
 
-import java.awt.event.KeyEvent;
-
 import com.studiohartman.jamepad.ControllerButton;
 
 public class GamepadButton {

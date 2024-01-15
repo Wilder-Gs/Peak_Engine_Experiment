@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 
 import santaJam.Game;
 import santaJam.inputs.Inputs;
-import santaJam.inputs.Keybind;
 
 /*
  * this class represents the window that the game is played on and uses java

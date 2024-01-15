@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import santaJam.Assets;
-import santaJam.audio.MusicManager;
 
 
 public class MenuSelection extends MenuObject{

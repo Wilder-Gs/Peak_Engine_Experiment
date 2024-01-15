@@ -16,10 +16,7 @@ import santaJam.graphics.Camera;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
 import santaJam.maps.Room;
-import santaJam.saves.Save;
-import santaJam.states.GameState;
 import santaJam.states.StateManager;
-import santaJam.states.TitleScreen;
 import santaJam.SantaJam;
 
 public class Player extends Entity {

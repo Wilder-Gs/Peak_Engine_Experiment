@@ -89,7 +89,6 @@ public class Save {
 		writeproperties(propertiesFile);
 	} 
 	public void saveGameTime() {
-		String val="";
 		propertiesFile.setProperty("gametime",""+Timer.getFrames());
 		writeproperties(propertiesFile);
 	} 

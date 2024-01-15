@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class RandFadeOut extends ParticleColourer{
 	private Color[] colours;
 	private double alpha, fadeSpeed;
-	private int rRange, gRange,bRange;
 	
 	private RandFadeOut(Color colour, double fadeSpeed, int startAlpha) {
 		super(colour);

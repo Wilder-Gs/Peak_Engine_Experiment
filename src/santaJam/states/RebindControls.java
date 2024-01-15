@@ -1,19 +1,22 @@
 package santaJam.states;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-
-import com.studiohartman.jamepad.ControllerManager;
-import com.studiohartman.jamepad.ControllerState;
 
 import santaJam.Assets;
 import santaJam.Game;
 import santaJam.SantaJam;
+import santaJam.components.Timer;
 import santaJam.graphics.UI.TextElement;
 import santaJam.inputs.Controllerbind;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
+import santaJam.states.menus.Menu;
+import santaJam.states.menus.MenuObject;
+import santaJam.states.menus.MenuSelection;
 
 public class RebindControls implements State {
 	State returnState;
@@ -24,10 +27,12 @@ public class RebindControls implements State {
 					Game.WIDTH - 80,
 					"", Assets.font);
 
+	Menu menu;
+	GameState mainState;
+	State stateToSwitch = null;
+
 	private int[] keyCodes = new int[Keybind.values().length];
 	private int currentAction = 0;
-	private ControllerManager controllers;
-	private ControllerState currController;
 
 	public RebindControls(State returnState) {
 		this.returnState = returnState;
@@ -35,17 +40,29 @@ public class RebindControls implements State {
 
 	@Override
 	public void start(State prevState) {
-		controllers = new ControllerManager();
-		controllers.initSDLGamepad();
+		Color textColour = new Color(200,254,255),hoverColour = new Color(5,28,40) ;
+		menu = new Menu(new Rectangle(), new MenuObject[] {
+				new MenuSelection(new Rectangle(Game.WIDTH/2-40,50,50,20), "QUIT TO TITLE", textColour,hoverColour) {
+					@Override
+					public void select() {
+						mainState.saveTime();
+						if(!Timer.TASPlayback) { StateManager.getGameState().saveTas(); }
+						stateToSwitch =  new TitleScreen();
+					}
+					@Override
+					public void render(Graphics g) {
+						super.render(g);
+						bounds.x=Game.WIDTH/2-(name.length()*TextElement.BIGMONOWIDTH/2);
+					}
+				}
+			});
+			menu.select();
 	}
 
 	@Override
 	public void update() {
 		Keybind current = Keybind.values()[currentAction];
 		int index = current.index;
-
-		controllers.update();
-		currController = controllers.getState(0);
 
 		if (current.bindable) {
 			action.update(
@@ -101,9 +118,6 @@ public class RebindControls implements State {
 	}
 
 	@Override
-	public void end() {
-		// TODO Auto-generated method stub
-
-	}
+	public void end() {}
 
 }

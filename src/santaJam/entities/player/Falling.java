@@ -10,10 +10,7 @@ public class Falling extends PlayerState{
 	private boolean firstFrame=true;
 	
 	@Override
-	public void start(PlayerState prevState) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void start(PlayerState prevState) {}
 
 	@Override
 	public PlayerState update(Player player) {
@@ -74,9 +71,6 @@ public class Falling extends PlayerState{
 	}
 
 	@Override
-	public void end() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void end() {}
 
 }
