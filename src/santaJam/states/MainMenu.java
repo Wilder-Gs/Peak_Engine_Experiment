@@ -123,7 +123,7 @@ public class MainMenu implements State{
 	} 
 
 	@Override
-	public void update() {
+	public void update() throws InterruptedException {
 		bgCam.update(lastRoom);
 		lastRoom.update();
 		particles.update();

@@ -24,6 +24,7 @@ public class MapState implements State{
 	private final double MINSCALE=0.25;
 	private ControllerManager controllers;
 	private ControllerState currController;
+	private static boolean moved = true;
 	
 	GameState gameState;
 	BufferedImage mapImg;
@@ -224,11 +225,11 @@ public class MapState implements State{
 		currController = controllers.getState(0);
 
 
-		if(Inputs.getKey(Keybind.Z).isHeld()&&scale<1-scale/20) {
+		if((Inputs.getKey(Keybind.Z).isHeld() || Inputs.con.rightTrigger > 0.1)&&scale<1-scale/20) {
 			scale+=scale/20;
 		
 		}
-		if(Inputs.getKey(Keybind.GRAPPLE).isHeld()) {
+		if(Inputs.getKey(Keybind.GRAPPLE).isHeld() || Inputs.con.leftTrigger > 0.1) {
 			if(scale>MINSCALE) {
 				scale-=scale/20;
 			}else {
@@ -237,31 +238,33 @@ public class MapState implements State{
 		}	
 		
 		//Trigger zooms
-		
-		if((Inputs.getKey(Keybind.LEFT).isHeld()|| Inputs.getBut(Controllerbind.LEFT).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.LEFT).isHeld()|| Inputs.getBut(Controllerbind.LEFT).isHeld() || Inputs.con.rightStickX < -0.1)&&scale>MINSCALE) {
 			mapX+=4;
 		}
-		if((Inputs.getKey(Keybind.RIGHT).isHeld()|| Inputs.getBut(Controllerbind.RIGHT).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.RIGHT).isHeld()|| Inputs.getBut(Controllerbind.RIGHT).isHeld() || Inputs.con.rightStickX > 0.1)&&scale>MINSCALE) {
 			mapX-=4;
 		}
 		
-		if((Inputs.getKey(Keybind.UP).isHeld()|| Inputs.getBut(Controllerbind.UP).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.UP).isHeld()|| Inputs.getBut(Controllerbind.UP).isHeld() || Inputs.con.rightStickY > 0.1)&&scale>MINSCALE) {
 			mapY+=4;
 		}
-		if((Inputs.getKey(Keybind.DOWN).isHeld()|| Inputs.getBut(Controllerbind.DOWN).isHeld())&&scale>MINSCALE) {
+		if((Inputs.getKey(Keybind.DOWN).isHeld()|| Inputs.getBut(Controllerbind.DOWN).isHeld() || Inputs.con.rightStickY < -0.1)&&scale>MINSCALE) {
 			mapY-=4;
 		}
-	
-		if(Inputs.getKey(Keybind.LEFT).isPressed()|| Inputs.getBut(Controllerbind.LEFT).isPressed()) {
+		if(Inputs.getKey(Keybind.LEFT).isPressed()|| Inputs.getBut(Controllerbind.LEFT).isPressed() || (Inputs.con.leftStickX < -0.1&& !moved)) {
 			if(scale<=MINSCALE) {
 				MusicManager.menuBack.play();
 				StateManager.setCurrentState(new PauseState(gameState));
-			}else {
 				
 			}
+			moved = true;
+			
 		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.menuBack.play();
 			StateManager.setCurrentState(gameState);
+		}
+		if(Inputs.con.leftStickY > -0.1 && Inputs.con.leftStickY < 0.1){
+			moved = false;
 		}
 		
 		

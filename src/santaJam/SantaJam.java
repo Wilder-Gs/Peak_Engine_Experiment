@@ -4,7 +4,7 @@ import com.studiohartman.jamepad.ControllerUnpluggedException;
 
 public class SantaJam {
 	private static Game game;
-	public static void main(String[] args) throws ControllerUnpluggedException {
+	public static void main(String[] args) throws ControllerUnpluggedException, InterruptedException {
 		game = new Game();
 		game.run();
 	}

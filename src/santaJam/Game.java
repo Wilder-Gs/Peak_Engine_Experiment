@@ -29,7 +29,7 @@ public class Game {
 		Inputs.setKeyBinds(settings.getKeyBinds());
 	}
 	
-	public void run() throws ControllerUnpluggedException {
+	public void run() throws ControllerUnpluggedException, InterruptedException {
 		StateManager.setCurrentState(new TitleScreen());
 		// new TasPlayback();
 		while(running) {

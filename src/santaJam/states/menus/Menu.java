@@ -3,6 +3,7 @@ package santaJam.states.menus;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.concurrent.TimeUnit;
 
 import com.studiohartman.jamepad.ControllerManager;
 import com.studiohartman.jamepad.ControllerState;
@@ -21,6 +22,7 @@ public class Menu extends MenuSelection{
 	private int selection=-1;
 	private int hovered=0;
 	private boolean inSubMenu=false;
+	private static boolean moved = false;
 
 	private ControllerManager controllers;
 	private ControllerState currController;
@@ -38,7 +40,7 @@ public class Menu extends MenuSelection{
 	}
 
 
-	public void update() {
+	public void update() throws InterruptedException {
 		controllers.update();
 		currController = controllers.getState(0);
 		if(inSubMenu) {
@@ -50,20 +52,27 @@ public class Menu extends MenuSelection{
 		}
 		
 		
-		if(Inputs.getKey(Keybind.DOWN).isPressed() || Inputs.getBut(Controllerbind.DOWN).isPressed()) {
+		if(Inputs.getKey(Keybind.DOWN).isPressed() || Inputs.getBut(Controllerbind.DOWN).isPressed()
+		|| (Inputs.con.leftStickY < -0.1 && !moved)) {
 			MusicManager.menuMove.play();
 			
 			hovered++;
 			if(hovered>menuObjects.length-1) {
 				hovered=0;
 			}
+			moved = true;
 		}
-		if(Inputs.getKey(Keybind.UP).isPressed()|| Inputs.getBut(Controllerbind.UP).isPressed()) {
+		if(Inputs.getKey(Keybind.UP).isPressed()|| Inputs.getBut(Controllerbind.UP).isPressed()
+		|| (Inputs.con.leftStickY > 0.1 && !moved)) {
 			MusicManager.menuMove.play();
 			hovered--;
 			if(hovered<0) {
 				hovered=menuObjects.length-1;
 			}
+			moved = true;
+		}
+		if(Inputs.con.leftStickY > -0.1 && Inputs.con.leftStickY < 0.1){
+			moved = false;
 		}
 		menuObjects[hovered].hover();
 		

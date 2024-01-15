@@ -29,6 +29,7 @@ public class SettingsState implements State{
 
 	private ControllerManager controllers;
 	private ControllerState currController;
+	private static boolean moved = true;
 	
 	public SettingsState(GameState mainState) {
 		this.mainState = mainState;
@@ -36,6 +37,7 @@ public class SettingsState implements State{
 	}
 	@Override
 	public void start(State prevState) {
+		moved = true;
 		controllers = new ControllerManager();
 		controllers.initSDLGamepad();
 		Color textColour = new Color(200,254,255),hoverColour = new Color(5,28,40) ;
@@ -129,20 +131,23 @@ public class SettingsState implements State{
 	}
 
 	@Override
-	public void update() {
+	public void update() throws InterruptedException {
 		menu.update();
 		controllers.update();
 		currController = controllers.getState(0);
 		if(stateToSwitch!=null) {
 			StateManager.setCurrentState(stateToSwitch);
 		}
-		if(Inputs.getKey(Keybind.RIGHT).isPressed()|| Inputs.getBut(Controllerbind.RIGHT).isPressed()) {
+		if(Inputs.getKey(Keybind.RIGHT).isPressed()|| Inputs.getBut(Controllerbind.RIGHT).isPressed() || (Inputs.con.leftStickX > 0.1 && !moved)) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new PauseState(mainState));
+			moved = true;
 		}if(Inputs.getKey(Keybind.PAUSE).isPressed()|| Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(mainState);
 			
+		}if(Inputs.con.leftStickY > -0.1 && Inputs.con.leftStickY < 0.1){
+			moved = false;
 		}
 	}
 

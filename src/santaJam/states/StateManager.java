@@ -9,7 +9,7 @@ public class StateManager {
 	private static Color bgColour=Color.black;
 	
 	
-	public static void update() {
+	public static void update() throws InterruptedException {
 		if(currentState!=null) {
 			currentState.update();
 		}

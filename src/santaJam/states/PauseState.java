@@ -36,6 +36,7 @@ public class PauseState implements State{
 
 	private ControllerManager controllers;
 	private ControllerState currController;
+	private static boolean moved = true;
 	
 	public PauseState(GameState gameState) {
 		this.gameState = gameState;
@@ -95,7 +96,7 @@ public class PauseState implements State{
 	public void start(State prevState) {}
 
 	@Override
-	public void update() {
+	public void update() throws InterruptedException {
 		menu.update();
 		controllers.update();
 		currController = controllers.getState(0);
@@ -103,13 +104,15 @@ public class PauseState implements State{
 		if(Inputs.getKey(Keybind.PAUSE).isPressed() || Inputs.getBut(Controllerbind.PAUSE).isPressed()) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(gameState);
-		}if(Inputs.getKey(Keybind.RIGHT).isPressed()|| Inputs.getBut(Controllerbind.RIGHT).isPressed()) {
+		}if(Inputs.getKey(Keybind.RIGHT).isPressed()|| Inputs.getBut(Controllerbind.RIGHT).isPressed()|| (Inputs.con.leftStickX > 0.1&&!moved)) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new MapState(gameState));
-		}if(Inputs.getKey(Keybind.LEFT).isPressed()|| Inputs.getBut(Controllerbind.LEFT).isPressed()) {
+		}if(Inputs.getKey(Keybind.LEFT).isPressed()|| Inputs.getBut(Controllerbind.LEFT).isPressed() || (Inputs.con.leftStickX < -0.1&&!moved)) {
 			MusicManager.playSound(MusicManager.menuBack);
 			StateManager.setCurrentState(new SettingsState(gameState));
 		}
+		
+		moved = Inputs.con.leftStickX > 0.1 || Inputs.con.leftStickX < -0.1;
 		
 	}
 
