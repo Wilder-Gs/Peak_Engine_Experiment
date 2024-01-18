@@ -89,16 +89,16 @@ public class MainMenu implements State{
 					this.bounds.x=Game.WIDTH/2-(name.length()*TextElement.BIGMONOWIDTH/2);
 				}
 			},
-			// new MenuSelection(new Rectangle(50,80,50,10), "REBIND CONTROLS",green, Color.white) {
-			// 	@Override
-			// 	public void select() {
-			// 		stateToSwitch = new RebindControls(new MainMenu(home, lastRoom, bgCam));
-			// 	}
-			// 	public void render(Graphics g) {
-			// 		super.render(g);
-			// 		bounds.x=Game.WIDTH/2-(name.length()*TextElement.BIGMONOWIDTH/2);
-			// 	}
-			// },
+			new MenuSelection(new Rectangle(50,80,50,10), "REBIND CONTROLS",green, Color.white) {
+				@Override
+				public void select() {
+					stateToSwitch = new RebindControls(new MainMenu(home, lastRoom, bgCam));
+				}
+				public void render(Graphics g) {
+					super.render(g);
+					bounds.x=Game.WIDTH/2-(name.length()*TextElement.BIGMONOWIDTH/2);
+				}
+			},
 			new MenuSelection(new Rectangle(50,90,50,10), "QUIT",green, Color.white) {
 				@Override
 				public void select() {

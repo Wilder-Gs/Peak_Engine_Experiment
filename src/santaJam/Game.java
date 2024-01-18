@@ -1,7 +1,5 @@
 package santaJam;
 
-import com.studiohartman.jamepad.ControllerUnpluggedException;
-
 import santaJam.audio.MusicManager;
 import santaJam.inputs.Inputs;
 import santaJam.inputs.Keybind;
@@ -28,7 +26,7 @@ public class Game {
 		Inputs.setKeyBinds(settings.getKeyBinds());
 	}
 	
-	public void run() throws ControllerUnpluggedException, InterruptedException {
+	public void run() {
 		StateManager.setCurrentState(new TitleScreen());
 		// new TasPlayback();
 		while(running) {

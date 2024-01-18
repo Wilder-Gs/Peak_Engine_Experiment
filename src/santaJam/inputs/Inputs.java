@@ -23,7 +23,7 @@ public class Inputs implements KeyListener {
 	// ^^Eventually for button mapping^^
 	private static GamepadButton[] controllerButtons = new GamepadButton[Controllerbind.values().length];
 
-	private static boolean keyPressed = false;
+	private static boolean keyPressed = false, plugged = true;
 	private static int lastKeyCode = -1;
 	private static InputButton anyKey = new InputButton(0);
 
@@ -64,7 +64,7 @@ public class Inputs implements KeyListener {
 		}
 	}
 
-	public static void update() throws ControllerUnpluggedException {
+	public static void update() {
 		controllers.update();
 		con = controllers.getState(0);
 		conIDX = controllers.getControllerIndex(0);
@@ -72,20 +72,31 @@ public class Inputs implements KeyListener {
 		for (Keybind keybind : Keybind.values()) {
 			inputButtons[keybind.index].update(keyStates[keybind.index]);
 		}
+		try{
 		for (GamepadButton button : controllerButtons)
 			button.update(conIDX.isButtonPressed(button.button));
+		}catch(ControllerUnpluggedException e){
+			if(plugged)
+			System.out.println("No controller plugged in!");
+			plugged = false;
+		}
 	}
 
 	public static void update(Keybind keybind) {
 		inputButtons[keybind.index].update(keyStates[keybind.index]);
 	}
 
-	public static void update(Controllerbind keybind) throws ControllerUnpluggedException {
+	public static void update(Controllerbind keybind){
 		controllers.update();
 		con = controllers.getState(0);
 		conIDX = controllers.getControllerIndex(0);
+		try{
 		controllerButtons[keybind.index].update(conIDX.isButtonPressed(keybind.bind));
-		;
+		}catch(ControllerUnpluggedException e){
+			if(plugged)
+			System.out.println("No controller plugged in!");
+			plugged = false;
+		}
 	}
 
 	public static void setKeyBinds(int[] newKeyCodes) {

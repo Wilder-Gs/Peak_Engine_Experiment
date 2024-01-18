@@ -17,7 +17,7 @@ public class Menu extends MenuSelection{
 	private int selection=-1;
 	private int hovered=0;
 	private boolean inSubMenu=false;
-	private static boolean moved = false;
+	public static boolean moved = false;
 	
 	public Menu(Rectangle bounds,String name,Color colour, Color hoverColour,  MenuObject[] menuObjects) {
 		super(bounds,name,colour,hoverColour);
@@ -121,6 +121,12 @@ public class Menu extends MenuSelection{
 	}
 	public int getHoveredIndex() {
 		return hovered;
+	}
+	public void incrementHover(){
+		hovered++;
+	}
+	public void decrementHover(){
+		hovered--;
 	}
 	public boolean isInSubMenu() {
 		return inSubMenu;

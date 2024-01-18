@@ -1,10 +1,8 @@
 package santaJam;
 
-import com.studiohartman.jamepad.ControllerUnpluggedException;
-
 public class SantaJam {
 	private static Game game;
-	public static void main(String[] args) throws ControllerUnpluggedException, InterruptedException {
+	public static void main(String[] args) {
 		game = new Game();
 		game.run();
 	}
